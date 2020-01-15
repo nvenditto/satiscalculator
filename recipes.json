@@ -1,0 +1,156 @@
+{
+	"Iron Ingot" : {
+		"Inputs" : {
+			"Iron Ore" : 1
+		},
+		"Building" : "Smelter",
+		"Qty" : 1,
+		"Time" : 2
+	},
+	"Copper Ingot" : {
+		"Inputs" : {
+			"Copper Ore" : 1
+		},
+		"Building" : "Smelter",
+		"Qty" : 1,
+		"Time" : 2
+	},
+	"Caterium Ingot" : {
+		"Inputs" : {
+			"Caterium Ore" : 3
+		},
+		"Building" : "Smelter",
+		"Qty" : 1,
+		"Time" : 4
+	},
+	"Steel Ingot" : {
+		"Inputs" : {
+			"Coal" : 3,
+			"Iron Ore" : 3
+		},
+		"Building" : "Foundry",
+		"Qty" : 2,
+		"Time" : 4
+	},
+	"Aluminum Ingot" : {
+		"Inputs" : {
+			"Bauxite" : 7,
+			"Silica" : 6
+		},
+		"Building" : "Foundry",
+		"Qty" : 2,
+		"Time" : 4
+	},
+	"Iron Plate" : {
+		"Inputs" : {
+			"Iron Ingot" : 2
+		},
+		"Building" : "Constructor",
+		"Qty" : 1,
+		"Time" : 4
+	},
+	"Iron Rod" : {
+		"Inputs" : {
+			"Iron Ingot" : 1
+		},
+		"Building" : "Constructor",
+		"Qty" : 1,
+		"Time" : 4
+	},
+	"Wire" : {
+		"Inputs" : {
+			"Copper Ingot" : 1
+		},
+		"Building" : "Constructor",
+		"Qty" : 3,
+		"Time" : 4
+	},
+	"Cable" : {
+		"Inputs" : {
+			"Wire" : 2
+		},
+		"Building" : "Constructor",
+		"Qty" : 3,
+		"Time" : 4
+	},
+	"Biomass" : {
+		"Inputs" : {
+			"Leaves" : 10
+		},
+		"Building" : "Constructor",
+		"Qty" : 6,
+		"Time" : 4
+	},
+	"Concrete" : {
+		"Inputs" : {
+			"Limestone" : 3
+		},
+		"Building" : "Constructor",
+		"Qty" : 1,
+		"Time" : 4
+	},
+	"Screw" : {
+		"Inputs" : {
+			"Iron Rod" : 1
+		},
+		"Building" : "Constructor",
+		"Qty" : 6,
+		"Time" : 4
+	},
+	"Biomass" : {
+		"Inputs" : {
+			"Wood" : 5
+		},
+		"Building" : "Constructor",
+		"Qty" : 25,
+		"Time" : 4
+	},
+	"Biofuel" : {
+		"Inputs" : {
+			"Biomass" : 4
+		},
+		"Building" : "Constructor",
+		"Qty" : 2,
+		"Time" : 4
+	},
+	"Steel Beam" : {
+		"Inputs" : {
+			"Steel Ingot" : 3
+		},
+		"Building" : "Constructor",
+		"Qty" : 1,
+		"Time" : 6
+	},
+	"Steel Pipe" : {
+		"Inputs" : {
+			"Steel Ingot" : 1
+		},
+		"Building" : "Constructor",
+		"Qty" : 1,
+		"Time" : 4
+	},
+	"Quickwire" : {
+		"Inputs" : {
+			"Caterium Ingot" : 1
+		},
+		"Building" : "Constructor",
+		"Qty" : 4,
+		"Time" : 4
+	},
+	"Silica" : {
+		"Inputs" : {
+			"Raw Quartz" : 2
+		},
+		"Building" : "Constructor",
+		"Qty" : 3,
+		"Time" : 4
+	},
+	"Quartz Crystal" : {
+		"Inputs" : {
+			"Raw Quartz" : 2
+		},
+		"Building" : "Constructor",
+		"Qty" : 1,
+		"Time" : 4
+	},
+}
