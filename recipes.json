@@ -41,6 +41,30 @@
 		"Qty" : 2,
 		"Time" : 4
 	},
+        "Fuel" : {
+                "Inputs" : {
+                        "Crude Oil" : 8
+                },
+                "Building" : "Oil Refinery",
+                "Qty" : 5,
+                "Time" : 8
+        },
+        "Plastic" : {
+                "Inputs" : {
+                        "Crude Oil" : 4
+                },
+                "Building" : "Oil Refinery",
+                "Qty" : 3,
+                "Time" : 8
+        },
+        "Rubber" : {
+                "Inputs" : {
+                        "Crude Oil" : 4
+                },
+                "Building" : "Oil Refinery",
+                "Qty" : 4,
+                "Time" : 8
+        },
 	"Iron Plate" : {
 		"Inputs" : {
 			"Iron Ingot" : 2
@@ -153,4 +177,138 @@
 		"Qty" : 1,
 		"Time" : 4
 	},
+        "Reinforced Iron Plate" : {
+                "Inputs" : {
+                        "Iron Plate" : 4,
+                        "Screw" : 24
+                },
+                "Building" : "Assembler",
+                "Qty" : 1,
+                "Time" : 12
+        },
+        "Rotor" : {
+                "Inputs" : {
+                        "Iron Rod" : 3,
+                        "Screw" : 22
+                },
+                "Building" : "Assembler",
+                "Qty" : 1,
+                "Time" : 10
+        },
+        "Modular Frame" : {
+                "Inputs" : {
+                        "Reinforced Iron Plate" : 3,
+                        "Iron Rod" : 6
+                },
+                "Building" : "Assembler",
+                "Qty" : 1,
+                "Time" : 15
+        },
+        "Encased Industrial Beam" : {
+                "Inputs" : {
+                        "Steel Beam" : 4,
+                        "Concrete" : 5
+                },
+                "Building" : "Assembler",
+                "Qty" : 1,
+                "Time" : 15
+        },
+        "Stator" : {
+                "Inputs" : {
+                        "Steel Pipe" : 3,
+                        "Wire" : 10
+                },
+                "Building" : "Assembler",
+                "Qty" : 1,
+                "Time" : 10
+        },
+        "Motor" : {
+                "Inputs" : {
+                        "Rotor" : 2,
+                        "Stator" : 2
+                },
+                "Building" : "Assembler",
+                "Qty" : 1,
+                "Time" : 12
+        },
+        "Fabric" : {
+                "Inputs" : {
+                        "Mycelia" : 1,
+                        "Biomass" : 5
+                },
+                "Building" : "Assembler",
+                "Qty" : 1,
+                "Time" : 4
+        },
+        "Circuit Board" : {
+                "Inputs" : {
+                        "Wire" : 12,
+                        "Plastic" : 6
+                },
+                "Building" : "Assembler",
+                "Qty" : 1,
+                "Time" : 6
+        },
+        "A.I. Limiter" : {
+                "Inputs" : {
+                        "Circuit Board" : 2,
+                        "Quickwire" : 18
+                },
+                "Building" : "Assembler",
+                "Qty" : 1,
+                "Time" : 12
+        },
+        "Heavy Modular Frame" : {
+                "Inputs" : {
+                        "Modular Frame" : 5,
+                        "Steel Pipe" : 15,
+                        "Encased Industrial Beam" : 5,
+                        "Screw" : 90
+                },
+                "Building" : "Manufacturer",
+                "Qty" : 1,
+                "Time" : 30
+        },
+        "Computer" : {
+                "Inputs" : {
+                        "Circuit Board" : 10,
+                        "Cable" : 12,
+                        "Plastic" : 18,
+                        "Screw" : 60
+                },
+                "Building" : "Manufacturer",
+                "Qty" : 1,
+                "Time" : 32
+        },
+        "Supercomputer" : {
+                "Inputs" : {
+                        "Computer" : 2,
+                        "A.I. Limiter" : 2,
+                        "High-Speed Connector" : 3,
+                        "Plastic" : 21
+                },
+                "Building" : "Manufacturer",
+                "Qty" : 1,
+                "Time" : 32
+        },
+        "High-Speed Connector" : {
+                "Inputs" : {
+                        "Quickwire" : 40,
+                        "Cable" : 10,
+                        "Plastic" : 6
+                },
+                "Building" : "Manufacturer",
+                "Qty" : 1,
+                "Time" : 24
+        },
+        "Filter" : {
+                "Inputs" : {
+                        "Coal" : 5,
+                        "Rubber" : 2,
+                        "Fabric" : 2
+                },
+                "Building" : "Manufacturer",
+                "Qty" : 1,
+                "Time" : 8
+        },
 }
