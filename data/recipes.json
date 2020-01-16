@@ -1,0 +1,419 @@
+{
+    "Iron Ingot" : {
+        "Inputs" : {
+            "Iron Ore" : 1
+        },
+        "Building" : "Smelter",
+        "Qty" : 1,
+        "Time" : 2
+    },
+    "Copper Ingot" : {
+        "Inputs" : {
+            "Copper Ore" : 1
+        },
+        "Building" : "Smelter",
+        "Qty" : 1,
+        "Time" : 2
+    },
+    "Caterium Ingot" : {
+        "Inputs" : {
+            "Caterium Ore" : 3
+        },
+        "Building" : "Smelter",
+        "Qty" : 1,
+        "Time" : 4
+    },
+    "Steel Ingot" : {
+        "Inputs" : {
+            "Coal" : 3,
+            "Iron Ore" : 3
+        },
+        "Building" : "Foundry",
+        "Qty" : 2,
+        "Time" : 4
+    },
+    "Aluminum Ingot" : {
+        "Inputs" : {
+            "Bauxite" : 7,
+            "Silica" : 6
+        },
+        "Building" : "Foundry",
+        "Qty" : 2,
+        "Time" : 4
+    },
+	"Fuel" : {
+			"Inputs" : {
+					"Crude Oil" : 8
+			},
+			"Building" : "Oil Refinery",
+			"Qty" : 5,
+			"Time" : 8
+	},
+	"Plastic" : {
+			"Inputs" : {
+					"Crude Oil" : 4
+			},
+			"Building" : "Oil Refinery",
+			"Qty" : 3,
+			"Time" : 8
+	},
+	"Rubber" : {
+			"Inputs" : {
+					"Crude Oil" : 4
+			},
+			"Building" : "Oil Refinery",
+			"Qty" : 4,
+			"Time" : 8
+	},
+    "Iron Plate" : {
+        "Inputs" : {
+            "Iron Ingot" : 2
+        },
+        "Building" : "Constructor",
+        "Qty" : 1,
+        "Time" : 4
+    },
+    "Iron Rod" : {
+        "Inputs" : {
+            "Iron Ingot" : 1
+        },
+        "Building" : "Constructor",
+        "Qty" : 1,
+        "Time" : 4
+    },
+    "Wire" : {
+        "Inputs" : {
+            "Copper Ingot" : 1
+        },
+        "Building" : "Constructor",
+        "Qty" : 3,
+        "Time" : 4
+    },
+    "Cable" : {
+        "Inputs" : {
+            "Wire" : 2
+        },
+        "Building" : "Constructor",
+        "Qty" : 3,
+        "Time" : 4
+    },
+    "Biomass" : {
+        "Inputs" : {
+            "Leaves" : 10
+        },
+        "Building" : "Constructor",
+        "Qty" : 6,
+        "Time" : 4
+    },
+    "Concrete" : {
+        "Inputs" : {
+            "Limestone" : 3
+        },
+        "Building" : "Constructor",
+        "Qty" : 1,
+        "Time" : 4
+    },
+    "Screw" : {
+        "Inputs" : {
+            "Iron Rod" : 1
+        },
+        "Building" : "Constructor",
+        "Qty" : 6,
+        "Time" : 4
+    },
+    "Biomass" : {
+        "Inputs" : {
+            "Wood" : 5
+        },
+        "Building" : "Constructor",
+        "Qty" : 25,
+        "Time" : 4
+    },
+    "Biofuel" : {
+        "Inputs" : {
+            "Biomass" : 4
+        },
+        "Building" : "Constructor",
+        "Qty" : 2,
+        "Time" : 4
+    },
+    "Steel Beam" : {
+        "Inputs" : {
+            "Steel Ingot" : 3
+        },
+        "Building" : "Constructor",
+        "Qty" : 1,
+        "Time" : 6
+    },
+    "Steel Pipe" : {
+        "Inputs" : {
+            "Steel Ingot" : 1
+        },
+        "Building" : "Constructor",
+        "Qty" : 1,
+        "Time" : 4
+    },
+    "Quickwire" : {
+        "Inputs" : {
+            "Caterium Ingot" : 1
+        },
+        "Building" : "Constructor",
+        "Qty" : 4,
+        "Time" : 4
+    },
+    "Silica" : {
+        "Inputs" : {
+            "Raw Quartz" : 2
+        },
+        "Building" : "Constructor",
+        "Qty" : 3,
+        "Time" : 4
+    },
+    "Quartz Crystal" : {
+        "Inputs" : {
+            "Raw Quartz" : 2
+        },
+        "Building" : "Constructor",
+        "Qty" : 1,
+        "Time" : 4
+    },
+    "Reinforced Iron Plate" : {
+            "Inputs" : {
+                    "Iron Plate" : 4,
+                    "Screw" : 24
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 12
+    },
+    "Rotor" : {
+            "Inputs" : {
+                    "Iron Rod" : 3,
+                    "Screw" : 22
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 10
+    },
+    "Modular Frame" : {
+            "Inputs" : {
+                    "Reinforced Iron Plate" : 3,
+                    "Iron Rod" : 6
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 15
+    },
+    "Encased Industrial Beam" : {
+            "Inputs" : {
+                    "Steel Beam" : 4,
+                    "Concrete" : 5
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 15
+    },
+    "Stator" : {
+            "Inputs" : {
+                    "Steel Pipe" : 3,
+                    "Wire" : 10
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 10
+    },
+    "Motor" : {
+            "Inputs" : {
+                    "Rotor" : 2,
+                    "Stator" : 2
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 12
+    },
+    "Fabric" : {
+            "Inputs" : {
+                    "Mycelia" : 1,
+                    "Biomass" : 5
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 4
+    },
+    "Circuit Board" : {
+            "Inputs" : {
+                    "Wire" : 12,
+                    "Plastic" : 6
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 6
+    },
+    "A.I. Limiter" : {
+            "Inputs" : {
+                    "Circuit Board" : 2,
+                    "Quickwire" : 18
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 12
+    },
+    "Heavy Modular Frame" : {
+            "Inputs" : {
+                    "Modular Frame" : 5,
+                    "Steel Pipe" : 15,
+                    "Encased Industrial Beam" : 5,
+                    "Screw" : 90
+            },
+            "Building" : "Manufacturer",
+            "Qty" : 1,
+            "Time" : 30
+    },
+    "Computer" : {
+            "Inputs" : {
+                    "Circuit Board" : 10,
+                    "Cable" : 12,
+                    "Plastic" : 18,
+                    "Screw" : 60
+            },
+            "Building" : "Manufacturer",
+            "Qty" : 1,
+            "Time" : 32
+    },
+    "Supercomputer" : {
+            "Inputs" : {
+                    "Computer" : 2,
+                    "A.I. Limiter" : 2,
+                    "High-Speed Connector" : 3,
+                    "Plastic" : 21
+            },
+            "Building" : "Manufacturer",
+            "Qty" : 1,
+            "Time" : 32
+    },
+    "High-Speed Connector" : {
+            "Inputs" : {
+                    "Quickwire" : 40,
+                    "Cable" : 10,
+                    "Plastic" : 6
+            },
+            "Building" : "Manufacturer",
+            "Qty" : 1,
+            "Time" : 24
+    },
+    "Filter" : {
+            "Inputs" : {
+                    "Coal" : 5,
+                    "Rubber" : 2,
+                    "Fabric" : 2
+            },
+            "Building" : "Manufacturer",
+            "Qty" : 1,
+            "Time" : 8
+    },
+    "Crystal Oscillator" : {
+            "Inputs" : {
+                    "Quartz Crystal" : 10,
+                    "Cable" : 14,
+                    "Reinforced Iron Plate" : 4
+            },
+            "Building" : "Manufacturer",
+            "Qty" : 1,
+            "Time" : 32
+    },
+    "Compacted Coal" : {
+            "Inputs" : {
+                    "Coal" : 4,
+                    "Sulfur" : 4
+            },
+            "Building" : "Assembler",
+            "Qty" : 3,
+            "Time" : 6
+    },
+    "Turbofuel" : {
+            "Inputs" : {
+                    "Fuel" : 5,
+                    "Compacted Coal" : 4
+            },
+            "Building" : "Assembler",
+            "Qty" : 5,
+            "Time" : 16
+    },
+    "Alclad Aluminum Sheet" : {
+            "Inputs" : {
+                    "Aluminum Ingot" : 3,
+                    "Copper Ingot" : 2
+            },
+            "Building" : "Assembler",
+            "Qty" : 3,
+            "Time" : 12
+    },
+    "Uranium Cell" : {
+            "Inputs" : {
+                    "Uranium" : 45,
+                    "Concrete" : 9
+            },
+            "Building" : "Assembler",
+            "Qty" : 10,
+            "Time" : 60
+    },
+    "Electromagnetic Control Rod" : {
+            "Inputs" : {
+                    "Stator" : 3,
+                    "A.I. Limiter" : 2
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 30
+    },
+    "Nuclear Fuel Rod" : {
+            "Inputs" : {
+                    "Uranium Cell" : 25,
+                    "Encased Industrial Beam" : 3,
+                    "Electromagnetic Control Rod" : 5
+            },
+            "Building" : "Manufacturer",
+            "Qty" : 1,
+            "Time" : 150
+    },
+    "Heat Sink" : {
+            "Inputs" : {
+                    "Alclad Aluminum Sheet" : 4,
+                    "Rubber" : 10
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 12
+    },
+    "Radio Control Unit" : {
+            "Inputs" : {
+                    "Heat Sink" : 4,
+                    "Rubber" : 24,
+                    "Crystal Oscillator" : 1,
+					"Computer" : 1
+            },
+            "Building" : "Manufacturer",
+            "Qty" : 1,
+            "Time" : 24
+    },
+    "Turbo Motor" : {
+            "Inputs" : {
+                    "Heat Sink" : 4,
+                    "Radio Control Unit" : 2,
+                    "Motor" : 4,
+					"Rubber" : 40
+            },
+            "Building" : "Manufacturer",
+            "Qty" : 1,
+            "Time" : 32
+    }
+    "Black Powder" : {
+            "Inputs" : {
+                    "Coal" : 1,
+                    "Sulfur" : 2
+            },
+            "Building" : "Assembler",
+            "Qty" : 1,
+            "Time" : 8
+    },
+}
