@@ -25,13 +25,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \ 
     src/main.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/aboutdialog.cpp \
+    src/productionmodel.cpp \
+    src/recipemodel.cpp \
+    src/selectrecipedialog.cpp
 
 HEADERS += \ 
     src/mainwindow.h \
-    src/recipedb.h
+    src/recipedb.h \
+    src/aboutdialog.h \
+    src/productionmodel.h \
+    src/recipemodel.h \
+    src/selectrecipedialog.h
 
-FORMS +=
+FORMS += \
+    src/mainwindow.ui \
+    src/aboutdialog.ui \
+    src/selectrecipedialog.ui
 
 RESOURCES += \
     resources.qrc

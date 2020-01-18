@@ -406,7 +406,7 @@
             "Building" : "Manufacturer",
             "Qty" : 1,
             "Time" : 32
-    }
+    },
     "Black Powder" : {
             "Inputs" : {
                     "Coal" : 1,
@@ -415,5 +415,5 @@
             "Building" : "Assembler",
             "Qty" : 1,
             "Time" : 8
-    },
+    }
 }
