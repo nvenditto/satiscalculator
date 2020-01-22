@@ -35,7 +35,7 @@ void RecipeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         const QString outputName = index.data(Qt::DisplayRole).toString();
 
         const int lineWidth = rect.width() - hMargin * 2;
-        const int lineHeight = (rect.height() - vMargin * 2) / 2;
+        const int lineHeight = (rect.height() - vMargin * 2);
 
         const QRect nameRect(rect.left() + hMargin + iconWidth + iconMargin,
                               rect.top() + vMargin,
@@ -56,8 +56,9 @@ void RecipeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         int top = rect.top() + vMargin;
 
         const QFontMetrics metrics(option.font);
-        const int textWidth = metrics.width("=");
-        const int qtyWidth = metrics.width("88");
+        const int textWidth = metrics.horizontalAdvance("=");
+        const int qtyWidth = metrics.horizontalAdvance("88");
+
 
         auto input1Var = index.data(Input1IconRole);
         if(!input1Var.isNull())
@@ -150,7 +151,7 @@ QSize RecipeDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
         const QFontMetrics metrics(option.font);
         const int vMargin = option.widget->style()->pixelMetric(QStyle::PM_FocusFrameVMargin);
         const int hMargin = option.widget->style()->pixelMetric(QStyle::PM_FocusFrameHMargin);
-        const int textWidth = metrics.width(name);
+        const int textWidth = metrics.horizontalAdvance(name);
         const int textHeight = metrics.height();
 
         const int contentsHeight = qMax(textHeight, iconHeight);
@@ -163,8 +164,8 @@ QSize RecipeDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
     else
     {
         const QFontMetrics metrics(option.font);
-        const int eqsWidth = metrics.width("=");
-        const int qtyWidth = metrics.width("88");
+        const int eqsWidth = metrics.horizontalAdvance("=");
+        const int qtyWidth = metrics.horizontalAdvance("88");
         const int vMargin = option.widget->style()->pixelMetric(QStyle::PM_FocusFrameVMargin);
         const int hMargin = option.widget->style()->pixelMetric(QStyle::PM_FocusFrameHMargin);
 

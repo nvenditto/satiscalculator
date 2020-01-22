@@ -37,6 +37,8 @@ enum Roles
 
 class RecipeModel : public QAbstractItemModel
 {
+    static constexpr quintptr KeyID = 0U;
+
 public:
     struct RecipeInput
     {

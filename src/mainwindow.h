@@ -16,12 +16,12 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-    Ui::MainWindow* ui;
+    Ui::MainWindow* ui {nullptr};
     std::unordered_map<QString, QIcon*> iconDB;
-    RecipeModel* recipeModel;
-    ProductionModel* prodModel;
+    RecipeModel* recipeModel {nullptr};
+    ProductionModel* prodModel {nullptr};
 
-    SelectRecipeDialog* recipeDlg;
+    SelectRecipeDialog* recipeDlg {nullptr};
 
     void loadIcons();
 

@@ -7,6 +7,7 @@
 #include <QJsonArray>
 #include <QIcon>
 
+constexpr quintptr RecipeModel::KeyID;
 
 RecipeModel::RecipeModel(std::unordered_map<QString, QIcon*>& iconDB, QObject *parent) :
     QAbstractItemModel(parent),
@@ -253,7 +254,7 @@ QModelIndex RecipeModel::index(int row, int column, const QModelIndex &parent) c
     if(!parent.isValid())
     {
         // The parent is the root item
-        return createIndex(row, column, 0U);
+        return createIndex(row, column, KeyID);
     }
     else if(parent.internalId() == 0)
     {
@@ -291,7 +292,7 @@ QModelIndex RecipeModel::parent(const QModelIndex &child) const
 
     int newRow = static_cast<int>(child.internalId()) - 1;
 
-    return createIndex(newRow, 0, 0U);
+    return createIndex(newRow, 0, KeyID);
 }
 
 void RecipeModel::addRecipe(const RecipeModel::Recipe &newRecipe)
