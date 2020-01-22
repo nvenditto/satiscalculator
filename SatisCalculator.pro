@@ -29,7 +29,8 @@ SOURCES += \
     src/aboutdialog.cpp \
     src/productionmodel.cpp \
     src/recipemodel.cpp \
-    src/selectrecipedialog.cpp
+    src/selectrecipedialog.cpp \
+    src/recipedelegate.cpp
 
 HEADERS += \ 
     src/mainwindow.h \
@@ -37,7 +38,8 @@ HEADERS += \
     src/aboutdialog.h \
     src/productionmodel.h \
     src/recipemodel.h \
-    src/selectrecipedialog.h
+    src/selectrecipedialog.h \
+    src/recipedelegate.h
 
 FORMS += \
     src/mainwindow.ui \

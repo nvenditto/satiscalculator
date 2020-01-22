@@ -54,12 +54,13 @@
         <file>data/images/Steel_Ingot.png</file>
         <file>data/images/Steel_Pipe.png</file>
         <file>data/images/Sulfur.png</file>
-        <file>data/images/Superomputer.png</file>
         <file>data/images/Turbo_Motor.png</file>
         <file>data/images/Turbofuel.png</file>
         <file>data/images/Uranium.png</file>
         <file>data/images/Uranium_Cell.png</file>
         <file>data/images/Wire.png</file>
         <file>data/images/Wood.png</file>
+        <file>data/images/Filter.png</file>
+        <file>data/images/Supercomputer.png</file>
     </qresource>
 </RCC>

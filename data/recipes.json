@@ -97,14 +97,24 @@
         "Qty" : 3,
         "Time" : 4
     },
-    "Biomass" : {
-        "Inputs" : {
-            "Leaves" : 10
-        },
-        "Building" : "Constructor",
-        "Qty" : 6,
-        "Time" : 4
-    },
+    "Biomass" : [
+      {
+	      "Inputs" : {
+		      "Leaves" : 10
+	      },
+	      "Building" : "Constructor",
+	      "Qty" : 6,
+	      "Time" : 4
+      },
+      {
+	      "Inputs" : {
+		      "Wood" : 5
+	      },
+	      "Building" : "Constructor",
+	      "Qty" : 25,
+	      "Time" : 4
+      }
+    ],
     "Concrete" : {
         "Inputs" : {
             "Limestone" : 3
@@ -119,14 +129,6 @@
         },
         "Building" : "Constructor",
         "Qty" : 6,
-        "Time" : 4
-    },
-    "Biomass" : {
-        "Inputs" : {
-            "Wood" : 5
-        },
-        "Building" : "Constructor",
-        "Qty" : 25,
         "Time" : 4
     },
     "Biofuel" : {

@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
      loadIcons();
 
-     recipeModel = new RecipeModel(this);
+     recipeModel = new RecipeModel(iconDB, this);
 
      prodModel = new ProductionModel(this);
      ui->productionListView->setModel(prodModel);

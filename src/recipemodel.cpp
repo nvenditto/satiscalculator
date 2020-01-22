@@ -4,184 +4,317 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
+#include <QJsonArray>
+#include <QIcon>
 
 
-RecipeModel::RecipeModel(QObject *parent) :
-    QAbstractTableModel(parent)
+RecipeModel::RecipeModel(std::unordered_map<QString, QIcon*>& iconDB, QObject *parent) :
+    QAbstractItemModel(parent),
+    iconDatabase(iconDB)
 {
     loadRecipes();
-}
-
-int RecipeModel::columnCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent)
-    return columnCountVal;
 }
 
 int RecipeModel::rowCount(const QModelIndex &parent) const
 {
     if(parent.isValid())
     {
-        return 0;
+        if(parent.internalId() == 0)
+        {
+            // output names have one or more recipes
+            auto key = recipeKeys.at(parent.row());
+
+            auto keyCount = recipeDB.count(key);
+
+            return keyCount;
+        }
+        else
+        {
+            // recipe entries have no children
+            return 0;
+        }
     }
 
-    return recipeDB.size();
+    return recipeKeys.size();
+}
+
+int RecipeModel::columnCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent)
+    return 1;
 }
 
 QVariant RecipeModel::data(const QModelIndex &index, int role) const
 {
-    if(!index.isValid() || role != Qt::DisplayRole)
+    if(!index.isValid())
     {
         return {};
     }
 
-    const auto& recipeIndex = recipeList.at(index.row());
-    const auto& recipeEntry = recipeDB.at(recipeIndex);
-
-    switch(index.column())
+    try
     {
-    case 0:
-        return {recipeEntry.outputName};
-
-    case 1:
-        return {recipeEntry.outputQty};
-
-    case 2:
-        return {recipeEntry.productionTime};
-
-    case 3:
-        return {recipeEntry.buildingName};
-
-    // Input #1
-    case 4:
-        return {recipeEntry.inputs[0].name};
-
-    case 5:
-        return {recipeEntry.inputs[0].qty};
-    // Input #2
-    case 6:
-        if(recipeEntry.inputs.size() > 1)
+        if(index.internalId() == 0)
         {
-            return {recipeEntry.inputs[1].name};
+            // this is an output name
+            auto key = recipeKeys.at(index.row());
+
+            if(role == Qt::DisplayRole)
+            {
+                return {key};
+            }
+            else if(role == Qt::DecorationRole)
+            {
+                auto iconPtr = iconDatabase.at(key);
+
+                QVariant retVar = QVariant::fromValue(*iconPtr);
+
+                return retVar;
+            }
+            else
+            {
+                return {};
+            }
         }
         else
         {
-            return {};
-        }
+            // this is a recipe entry
+            auto key = recipeKeys.at(index.internalId()-1);
+            auto recipes = recipeDB.equal_range(key);
 
-    case 7:
-        if(recipeEntry.inputs.size() > 1)
-        {
-            return {recipeEntry.inputs[1].qty};
-        }
-        else
-        {
-            return {};
-        }
-    // Input #3
-    case 8:
-        if(recipeEntry.inputs.size() > 2)
-        {
-            return {recipeEntry.inputs[2].name};
-        }
-        else
-        {
-            return {};
-        }
+            int entryIndex = 0;
+            for(auto& recipeEntry = recipes.first; recipeEntry != recipes.second; ++recipeEntry)
+            {
+                if(entryIndex == index.row())
+                {
+                    auto theRecipe = recipeEntry->second;
+                    QIcon* iconPtr {nullptr};
+                    QVariant retVar{};
 
-    case 9:
-        if(recipeEntry.inputs.size() > 2)
-        {
-            return {recipeEntry.inputs[2].qty};
-        }
-        else
-        {
-            return {};
-        }
-    // Input #4
-    case 10:
-        if(recipeEntry.inputs.size() > 3)
-        {
-            return {recipeEntry.inputs[3].name};
-        }
-        else
-        {
-            return {};
-        }
+                    switch(role)
+                    {
+                    case Qt::DisplayRole:
+                        return {theRecipe->outputName};
 
-    case 11:
-        if(recipeEntry.inputs.size() > 3)
-        {
-            return {recipeEntry.inputs[3].qty};
-        }
-        else
-        {
-            return {};
-        }
+                    case Qt::DecorationRole:
+                        iconPtr = iconDatabase.at(theRecipe->outputName);
+                        retVar = QVariant::fromValue(*iconPtr);
+                        return retVar;
 
-    default:
+                    case OutputQtyRole:
+                        return {theRecipe->outputQty};
+
+                    case ProductionTimeRole:
+                        return {theRecipe->productionTime};
+
+                    case BuildingNameRole:
+                        return {theRecipe->buildingName};
+
+                    case Input1NameRole:
+                        return {theRecipe->inputs[0].name};
+
+                    case Input1IconRole:
+                        iconPtr = iconDatabase.at(theRecipe->inputs[0].name);
+                        retVar = QVariant::fromValue(*iconPtr);
+                        return retVar;
+
+                    case Input1QtyRole:
+                        return {theRecipe->inputs[0].qty};
+
+
+                    case Input2NameRole:
+                        if(theRecipe->inputs.size() > 1)
+                        {
+                            return {theRecipe->inputs[1].name};
+                        }
+                        else
+                        {
+                            return {};
+                        }
+
+                    case Input2IconRole:
+                        if(theRecipe->inputs.size() > 1)
+                        {
+                            iconPtr = iconDatabase.at(theRecipe->inputs[1].name);
+                            retVar = QVariant::fromValue(*iconPtr);
+                            return retVar;
+                        }
+                        else
+                        {
+                            return {};
+                        }
+
+                    case Input2QtyRole:
+                        if(theRecipe->inputs.size() > 1)
+                        {
+                            return {theRecipe->inputs[1].qty};
+                        }
+                        else
+                        {
+                            return {};
+                        }
+
+
+                    case Input3NameRole:
+                        if(theRecipe->inputs.size() > 2)
+                        {
+                            return {theRecipe->inputs[2].name};
+                        }
+                        else
+                        {
+                            return {};
+                        }
+
+                    case Input3IconRole:
+                        if(theRecipe->inputs.size() > 2)
+                        {
+                            iconPtr = iconDatabase.at(theRecipe->inputs[2].name);
+                            retVar = QVariant::fromValue(*iconPtr);
+                            return retVar;
+                        }
+                        else
+                        {
+                            return {};
+                        }
+
+                    case Input3QtyRole:
+                        if(theRecipe->inputs.size() > 2)
+                        {
+                            return {theRecipe->inputs[2].qty};
+                        }
+                        else
+                        {
+                            return {};
+                        }
+
+
+                    case Input4NameRole:
+                        if(theRecipe->inputs.size() > 3)
+                        {
+                            return {theRecipe->inputs[3].name};
+                        }
+                        else
+                        {
+                            return {};
+                        }
+
+                    case Input4IconRole:
+                        if(theRecipe->inputs.size() > 3)
+                        {
+                            iconPtr = iconDatabase.at(theRecipe->inputs[3].name);
+                            retVar = QVariant::fromValue(*iconPtr);
+                            return retVar;
+                        }
+                        else
+                        {
+                            return {};
+                        }
+
+                    case Input4QtyRole:
+                        if(theRecipe->inputs.size() > 3)
+                        {
+                            return {theRecipe->inputs[3].qty};
+                        }
+                        else
+                        {
+                            return {};
+                        }
+
+                    default:
+                        return {};
+                    }
+                }
+                ++entryIndex;
+            }
+        }
+    } catch(std::exception e)
+    {
         return {};
     }
+    return {};
 }
 
 QVariant RecipeModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if( orientation != Qt::Horizontal || role != Qt::DisplayRole )
+    if( orientation == Qt::Horizontal && role == Qt::DisplayRole && section == 0)
     {
-        return QAbstractTableModel::headerData( section, orientation, role );
-    }
-
-    switch(section)
-    {
-    case 0:
-        return {"Item Name"};
-
-    case 1:
-        return {"Quantity"};
-
-    case 2:
-        return {"Production Time (s)"};
-
-    case 3:
-        return {"Production Building"};
-
-    case 4:
-        return {"Input #1"};
-
-    case 5:
-        return {"Input #1 Qty"};
-
-    case 6:
-        return {"Input #3"};
-
-    case 7:
-        return {"Input #2 Qty"};
-
-    case 8:
-        return {"Input #4"};
-
-    case 9:
-        return {"Input #3 Qty"};
-
-    case 10:
-        return {"Input #4"};
-
-    case 11:
-        return {"Input #4 Qty"};
-
+        return {"Recipe"};
     }
 
     return {};
 }
 
+QModelIndex RecipeModel::index(int row, int column, const QModelIndex &parent) const
+{
+    if(!hasIndex(row, column, parent))
+    {
+        return QModelIndex();
+    }
+
+    if(!parent.isValid())
+    {
+        // The parent is the root item
+        return createIndex(row, column, 0U);
+    }
+    else if(parent.internalId() == 0)
+    {
+        auto key = recipeKeys.at(parent.row());
+
+        auto recipes = recipeDB.equal_range(key);
+
+        int entryIndex = 0;
+
+        for(auto& recipeEntry = recipes.first; recipeEntry != recipes.second; ++recipeEntry)
+        {
+            if(entryIndex == row)
+            {
+                return createIndex(row, column, parent.row()+1);
+            }
+            ++entryIndex;
+        }
+
+    }
+
+    return QModelIndex();
+}
+
+QModelIndex RecipeModel::parent(const QModelIndex &child) const
+{
+    if(!child.isValid())
+    {
+        return QModelIndex();
+    }
+
+    if(child.internalId() == 0)
+    {
+        return QModelIndex();
+    }
+
+    int newRow = static_cast<int>(child.internalId()) - 1;
+
+    return createIndex(newRow, 0, 0U);
+}
+
 void RecipeModel::addRecipe(const RecipeModel::Recipe &newRecipe)
 {
-    int newRowCount = recipeList.size() + 1;
+    auto recordedRecipe = new Recipe(newRecipe);
 
-    beginInsertRows(QModelIndex(), newRowCount, newRowCount);
-    recipeList.push_back(newRecipe.outputName);
-    recipeDB[newRecipe.outputName]= newRecipe;
-    endInsertRows();
+    if(recipeDB.count(newRecipe.outputName) > 0)
+    {
+        // We already have at a key for this recipe, so add an additional child
+        recipeDB.insert({newRecipe.outputName, recordedRecipe});
+    }
+    else
+    {
+        // No key exists yet for this recipe, so add new row
+        int newRowCount = recipeKeys.size() + 1;
+        beginInsertRows(QModelIndex(), newRowCount, newRowCount);
+
+            recipeKeys.push_back(newRecipe.outputName);
+
+            recipeDB.insert({newRecipe.outputName, recordedRecipe});
+
+        endInsertRows();
+    }
 }
 
 void RecipeModel::loadRecipes()
@@ -207,40 +340,22 @@ void RecipeModel::loadRecipes()
         // new recipe
         if(entryValue.isObject())
         {
-            Recipe newRecipe;
-            newRecipe.outputName = entryKey;
-
-            const auto entryMap = entryValue.toObject().toVariantMap();
-
-            if(!entryMap.contains("Qty") || !entryMap.contains("Time") || !entryMap.contains("Building") || !entryMap.contains("Inputs"))
+            addRecipe(entryKey, entryValue.toObject());
+        }
+        else if(entryValue.isArray())
+        {
+            auto recipeList = entryValue.toArray();
+            for(const auto& recipeEntry : recipeList)
             {
-                qCritical("Recipe missing required fields for key %s", qUtf8Printable(entryKey));
-                break;
+                if(recipeEntry.isObject())
+                {
+                    addRecipe(entryKey, recipeEntry.toObject());
+                }
+                else
+                {
+                    qWarning("Unrecognized recipe entry found for key %s", qUtf8Printable(entryKey));
+                }
             }
-
-            newRecipe.outputQty = entryMap.value("Qty").toInt();
-            newRecipe.productionTime = entryMap.value("Time").toInt();
-            newRecipe.buildingName = entryMap.value("Building").toString();
-
-            if(!entryMap.contains("Inputs"))
-            {
-                qCritical("Recipe is missing inputs for key %s", qUtf8Printable(entryKey));
-                break;
-            }
-
-            auto inputsMap = entryMap.value("Inputs").toMap();
-
-            for(auto inputEntry = inputsMap.cbegin(); inputEntry != inputsMap.cend(); ++inputEntry)
-            {
-                RecipeInput newInput;
-                newInput.name = inputEntry.key();
-                newInput.qty = inputEntry.value().toInt();
-
-                newRecipe.inputs.push_back(newInput);
-            }
-
-            recipeList.push_back(entryKey);
-            recipeDB[entryKey]=newRecipe;
         }
         else
         {
@@ -248,4 +363,47 @@ void RecipeModel::loadRecipes()
         }
     }
 
+}
+
+void RecipeModel::addRecipe(QString outputName, QJsonObject recipeJsonObj)
+{
+    auto newRecipe = new Recipe;
+    newRecipe->outputName = outputName;
+
+    const auto entryMap = recipeJsonObj.toVariantMap();
+
+    if(!entryMap.contains("Qty") || !entryMap.contains("Time") || !entryMap.contains("Building") || !entryMap.contains("Inputs"))
+    {
+        qCritical("Recipe missing required fields for key %s", qUtf8Printable(outputName));
+        return;
+    }
+
+    newRecipe->outputQty = entryMap.value("Qty").toInt();
+    newRecipe->productionTime = entryMap.value("Time").toInt();
+    newRecipe->buildingName = entryMap.value("Building").toString();
+
+    if(!entryMap.contains("Inputs"))
+    {
+        qCritical("Recipe is missing inputs for key %s", qUtf8Printable(outputName));
+        return;
+    }
+
+    auto inputsMap = entryMap.value("Inputs").toMap();
+
+    for(auto inputEntry = inputsMap.cbegin(); inputEntry != inputsMap.cend(); ++inputEntry)
+    {
+        RecipeInput newInput;
+        newInput.name = inputEntry.key();
+        newInput.qty = inputEntry.value().toInt();
+
+        newRecipe->inputs.push_back(newInput);
+    }
+
+    // If we don't have the key already, add it to the key list
+    if(recipeDB.count(outputName) == 0)
+    {
+        recipeKeys.push_back(outputName);
+    }
+
+    recipeDB.insert({newRecipe->outputName, newRecipe});
 }
