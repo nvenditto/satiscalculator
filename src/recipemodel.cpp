@@ -23,9 +23,9 @@ int RecipeModel::rowCount(const QModelIndex &parent) const
         if(parent.internalId() == 0)
         {
             // output names have one or more recipes
-            auto key = recipeKeys.at(parent.row());
+            auto key = recipeKeys.at(static_cast<size_t>(parent.row()));
 
-            auto keyCount = recipeDB.count(key);
+            auto keyCount = static_cast<int>(recipeDB.count(key));
 
             return keyCount;
         }
@@ -36,7 +36,7 @@ int RecipeModel::rowCount(const QModelIndex &parent) const
         }
     }
 
-    return recipeKeys.size();
+    return static_cast<int>(recipeKeys.size());
 }
 
 int RecipeModel::columnCount(const QModelIndex &parent) const
@@ -57,7 +57,7 @@ QVariant RecipeModel::data(const QModelIndex &index, int role) const
         if(index.internalId() == 0)
         {
             // this is an output name
-            auto key = recipeKeys.at(index.row());
+            auto key = recipeKeys.at(static_cast<size_t>(index.row()));
 
             if(role == Qt::DisplayRole)
             {
@@ -258,7 +258,7 @@ QModelIndex RecipeModel::index(int row, int column, const QModelIndex &parent) c
     }
     else if(parent.internalId() == 0)
     {
-        auto key = recipeKeys.at(parent.row());
+        auto key = recipeKeys.at(static_cast<size_t>(parent.row()));
 
         auto recipes = recipeDB.equal_range(key);
 
@@ -268,7 +268,8 @@ QModelIndex RecipeModel::index(int row, int column, const QModelIndex &parent) c
         {
             if(entryIndex == row)
             {
-                return createIndex(row, column, parent.row()+1);
+                auto childID = static_cast<quintptr>(parent.row() + 1);
+                return createIndex(row, column, childID);
             }
             ++entryIndex;
         }
@@ -307,7 +308,7 @@ void RecipeModel::addRecipe(const RecipeModel::Recipe &newRecipe)
     else
     {
         // No key exists yet for this recipe, so add new row
-        int newRowCount = recipeKeys.size() + 1;
+        int newRowCount = static_cast<int>(recipeKeys.size()) + 1;
         beginInsertRows(QModelIndex(), newRowCount, newRowCount);
 
             recipeKeys.push_back(newRecipe.outputName);
@@ -346,7 +347,7 @@ void RecipeModel::loadRecipes()
         else if(entryValue.isArray())
         {
             auto recipeList = entryValue.toArray();
-            for(const auto& recipeEntry : recipeList)
+            for(const auto recipeEntry : recipeList)
             {
                 if(recipeEntry.isObject())
                 {
@@ -379,8 +380,8 @@ void RecipeModel::addRecipe(QString outputName, QJsonObject recipeJsonObj)
         return;
     }
 
-    newRecipe->outputQty = entryMap.value("Qty").toInt();
-    newRecipe->productionTime = entryMap.value("Time").toInt();
+    newRecipe->outputQty = entryMap.value("Qty").toUInt();
+    newRecipe->productionTime = entryMap.value("Time").toUInt();
     newRecipe->buildingName = entryMap.value("Building").toString();
 
     if(!entryMap.contains("Inputs"))
@@ -395,7 +396,7 @@ void RecipeModel::addRecipe(QString outputName, QJsonObject recipeJsonObj)
     {
         RecipeInput newInput;
         newInput.name = inputEntry.key();
-        newInput.qty = inputEntry.value().toInt();
+        newInput.qty = inputEntry.value().toUInt();
 
         newRecipe->inputs.push_back(newInput);
     }

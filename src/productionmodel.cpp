@@ -13,7 +13,7 @@ int ProductionModel::rowCount(const QModelIndex &parent) const
         return 0;
     }
 
-    return outputList.size();
+    return static_cast<int>(outputList.size());
 }
 
 QVariant ProductionModel::data(const QModelIndex &index, int role) const
