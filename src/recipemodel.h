@@ -6,56 +6,19 @@
 #include <vector>
 #include <QHash>
 
+#include "Recipe.h"
+
 enum Roles
 {
     TitleRole = Qt::UserRole + 1,
-    OutputQtyRole,
-    ProductionTimeRole,
-    BuildingNameRole,
-    Input1NameRole,
-    Input1IconRole,
-    Input1QtyRole,
-    Input2NameRole,
-    Input2IconRole,
-    Input2QtyRole,
-    Input3NameRole,
-    Input3IconRole,
-    Input3QtyRole,
-    Input4NameRole,
-    Input4IconRole,
-    Input4QtyRole
+    RecipeRole,
 };
 
 class RecipeModel : public QAbstractItemModel
 {
-    static constexpr quintptr KeyID = 0U;
 
 public:
-    struct RecipeInput
-    {
-        QString name;
-        unsigned int qty {0U};
-    };
-
-    struct Recipe
-    {
-        QString outputName;
-        unsigned int outputQty {0U};
-        unsigned int productionTime {0U};
-        QString buildingName;
-        std::vector<RecipeInput> inputs;
-
-        Recipe() = default;
-
-        Recipe(const Recipe& other)
-        {
-            outputName = other.outputName;
-            outputQty = other.outputQty;
-            productionTime = other.productionTime;
-            buildingName = other.buildingName;
-            inputs = other.inputs;
-        }
-    };
+    static constexpr quintptr KeyID = 0U;
 
     std::unordered_map<QString, QIcon*>& iconDatabase;
 
@@ -65,12 +28,16 @@ public:
     int columnCount(const QModelIndex &parent) const override;
 
     QVariant data(const QModelIndex &index, int role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
     QModelIndex index(int row, int column, const QModelIndex &parent) const override;
     QModelIndex parent(const QModelIndex &child) const override;
 
-    void addRecipe(const Recipe& newRecipe);
+
+
 
 protected:
 
@@ -79,7 +46,7 @@ protected:
     void addRecipe(QString outputName, QJsonObject recipeJsonObj);
 
     static constexpr int columnCountVal = 12U; // accounts for up to 4 inputs
-    std::unordered_multimap<QString, Recipe*> recipeDB;
+    std::unordered_map<QString, std::vector<Recipe*>> recipeDB;
     std::vector<QString> recipeKeys;
 };
 

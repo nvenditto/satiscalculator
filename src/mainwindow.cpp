@@ -75,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
      connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::showAbout);
 
      connect(ui->addRecipeButton, &QPushButton::clicked, this, &MainWindow::showRecipes);
+     connect(ui->selectRecipesButton, &QPushButton::clicked, this, &MainWindow::showRecipes);
 
      loadIcons();
 

@@ -9,7 +9,7 @@ SelectRecipeDialog::SelectRecipeDialog(RecipeModel* modelRef, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    auto recipeItemDelegate = new RecipeDelegate(this);
+    auto recipeItemDelegate = new RecipeDelegate(modelRef->iconDatabase, this);
 
     ui->recipeTreeView->setModel(modelRef);
     ui->recipeTreeView->setItemDelegate(recipeItemDelegate);

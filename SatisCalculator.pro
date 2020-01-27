@@ -35,6 +35,7 @@ SOURCES += \
     src/recipedelegate.cpp
 
 HEADERS += \ 
+    src/Recipe.h \
     src/mainwindow.h \
     src/recipedb.h \
     src/aboutdialog.h \
