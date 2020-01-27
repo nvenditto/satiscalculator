@@ -26,6 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \ 
+    src/selectproductiondialog.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/aboutdialog.cpp \
@@ -35,6 +36,7 @@ SOURCES += \
     src/recipedelegate.cpp
 
 HEADERS += \ 
+    src/selectproductiondialog.h \
     src/Recipe.h \
     src/mainwindow.h \
     src/recipedb.h \
@@ -47,6 +49,7 @@ HEADERS += \
 FORMS += \
     src/mainwindow.ui \
     src/aboutdialog.ui \
+    src/selectproductiondialog.ui \
     src/selectrecipedialog.ui
 
 RESOURCES += \

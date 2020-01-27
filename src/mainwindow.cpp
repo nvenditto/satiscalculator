@@ -8,6 +8,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
+#include <QStandardItemModel>
+
+#include "selectrecipedialog.h"
+#include "selectproductiondialog.h"
 
 void MainWindow::showAbout()
 {
@@ -29,6 +33,16 @@ void MainWindow::showRecipes()
     }
 
     recipeDlg->show();
+}
+
+void MainWindow::showSelectProduction()
+{
+    if(!prodDlg)
+    {
+        prodDlg = new SelectProductionDialog(this);
+    }
+
+    prodDlg->show();
 }
 
 void MainWindow::loadIcons()
@@ -74,15 +88,15 @@ MainWindow::MainWindow(QWidget *parent) :
      connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
      connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::showAbout);
 
-     connect(ui->addRecipeButton, &QPushButton::clicked, this, &MainWindow::showRecipes);
+     connect(ui->addRecipeButton, &QPushButton::clicked, this, &MainWindow::showSelectProduction);
      connect(ui->selectRecipesButton, &QPushButton::clicked, this, &MainWindow::showRecipes);
 
      loadIcons();
 
      recipeModel = new RecipeModel(iconDB, this);
+     productionModel = new QStandardItemModel(this);
 
-     prodModel = new ProductionModel(this);
-     ui->productionListView->setModel(prodModel);
+     ui->productionListView->setModel(productionModel);
 }
 
 MainWindow::~MainWindow()
