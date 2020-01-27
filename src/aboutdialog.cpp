@@ -7,6 +7,8 @@ AboutDialog::AboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->aboutTextEdit->viewport()->setAutoFillBackground(false);
+
     connect(ui->okButton, &QPushButton::clicked, this, &QDialog::accept);
 }
 

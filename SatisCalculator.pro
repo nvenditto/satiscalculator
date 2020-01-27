@@ -53,4 +53,6 @@ FORMS += \
     src/selectrecipedialog.ui
 
 RESOURCES += \
-    resources.qrc
+    resources.qrc \
+    src/qdarkstyle/style.qrc
+    src/qdarkstyle/style.qrc
