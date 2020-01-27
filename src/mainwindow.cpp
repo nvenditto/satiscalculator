@@ -35,11 +35,16 @@ void MainWindow::showRecipes()
     recipeDlg->show();
 }
 
+void MainWindow::clearProdList()
+{
+    productionModel->clear();
+}
+
 void MainWindow::showSelectProduction()
 {
     if(!prodDlg)
     {
-        prodDlg = new SelectProductionDialog(this);
+        prodDlg = new SelectProductionDialog(recipeModel, productionModel, this);
     }
 
     prodDlg->show();
@@ -79,6 +84,7 @@ void MainWindow::loadIcons()
 
 }
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -88,7 +94,8 @@ MainWindow::MainWindow(QWidget *parent) :
      connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
      connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::showAbout);
 
-     connect(ui->addRecipeButton, &QPushButton::clicked, this, &MainWindow::showSelectProduction);
+     connect(ui->addProdButton, &QPushButton::clicked, this, &MainWindow::showSelectProduction);
+     connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::clearProdList);
      connect(ui->selectRecipesButton, &QPushButton::clicked, this, &MainWindow::showRecipes);
 
      loadIcons();

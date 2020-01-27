@@ -36,6 +36,7 @@ public:
 private slots:
     void showAbout();
     void showRecipes();
+    void clearProdList();
     void showSelectProduction();
 };
 

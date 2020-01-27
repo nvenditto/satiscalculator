@@ -1,6 +1,7 @@
 #include "selectrecipedialog.h"
 #include "ui_selectrecipedialog.h"
 
+#include "recipemodel.h"
 #include "recipedelegate.h"
 
 SelectRecipeDialog::SelectRecipeDialog(RecipeModel* modelRef, QWidget *parent) :

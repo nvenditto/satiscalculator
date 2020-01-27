@@ -2,7 +2,8 @@
 #define SELECTRECIPEDIALOG_H
 
 #include <QDialog>
-#include "recipemodel.h"
+
+class RecipeModel;
 
 namespace Ui {
 class SelectRecipeDialog;

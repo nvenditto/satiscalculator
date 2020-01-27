@@ -167,7 +167,7 @@ Qt::ItemFlags RecipeModel::flags(const QModelIndex &index) const
     else if(index.internalId() == KeyID)
     {
         // this is an output name
-        return Qt::ItemIsEnabled;
+        return (Qt::ItemIsEnabled | Qt::ItemIsSelectable);
     }
     else
     {
@@ -241,6 +241,8 @@ QModelIndex RecipeModel::parent(const QModelIndex &child) const
 
 void RecipeModel::loadRecipes()
 {
+    beginResetModel();
+
     QFile recipesFile(":/builtin/data/recipes.json");
 
     if(!recipesFile.open(QIODevice::ReadOnly))
@@ -292,6 +294,7 @@ void RecipeModel::loadRecipes()
         recipeList[0]->active = true;
     }
 
+    endResetModel();
 }
 
 void RecipeModel::addRecipe(QString outputName, QJsonObject recipeJsonObj)
