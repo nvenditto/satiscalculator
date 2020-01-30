@@ -12,6 +12,7 @@
 
 #include "selectrecipedialog.h"
 #include "selectproductiondialog.h"
+#include "prodqtydelegate.h"
 
 void MainWindow::showAbout()
 {
@@ -33,6 +34,18 @@ void MainWindow::showRecipes()
     }
 
     recipeDlg->show();
+}
+
+void MainWindow::removeCurrentItem()
+{
+    auto SelectedItemList = this->ui->productTableView->selectionModel()->selectedRows();
+
+    const int firstSelectedRow = SelectedItemList.first().row();
+    const int lastSelectedRow = SelectedItemList.last().row();
+
+    const int rowCount = lastSelectedRow - firstSelectedRow + 1;
+
+    productionModel->removeRows(firstSelectedRow, rowCount);
 }
 
 void MainWindow::clearProdList()
@@ -94,16 +107,25 @@ MainWindow::MainWindow(QWidget *parent) :
      connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
      connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::showAbout);
 
-     connect(ui->addProdButton, &QPushButton::clicked, this, &MainWindow::showSelectProduction);
-     connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::clearProdList);
      connect(ui->selectRecipesButton, &QPushButton::clicked, this, &MainWindow::showRecipes);
+
+     connect(ui->addProdButton, &QPushButton::clicked, this, &MainWindow::showSelectProduction);
+     connect(ui->removeProdButton, &QPushButton::clicked, this, &MainWindow::removeCurrentItem);
+     connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::clearProdList);
+
 
      loadIcons();
 
      recipeModel = new RecipeModel(iconDB, this);
-     productionModel = new QStandardItemModel(this);
+     productionModel = new ProductionModel(iconDB, this);
 
-     ui->productionListView->setModel(productionModel);
+     productionModel->setHeaderData(0, Qt::Horizontal, "Item");
+     productionModel->setHeaderData(1, Qt::Horizontal, "Rate");
+     ui->productTableView->setModel(productionModel);
+
+     auto qtyDelegate = new ProdQtyDelegate(this);
+     ui->productTableView->setItemDelegateForColumn(1, qtyDelegate);
+
 }
 
 MainWindow::~MainWindow()

@@ -37,6 +37,7 @@ public:
     QModelIndex parent(const QModelIndex &child) const override;
 
 
+    const Recipe* LookupRecipe(const QString& prodItem) const;
 
 
 protected:

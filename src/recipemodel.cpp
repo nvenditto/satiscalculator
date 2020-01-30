@@ -239,6 +239,26 @@ QModelIndex RecipeModel::parent(const QModelIndex &child) const
     return createIndex(newRow, 0, KeyID);
 }
 
+const Recipe* RecipeModel::LookupRecipe(const QString &prodItem) const
+{
+    try {
+        const auto recipeList = recipeDB.at(prodItem);
+
+        for(const auto& recipeEntry : recipeList)
+        {
+            if(recipeEntry->active)
+            {
+                return recipeEntry;
+            }
+        }
+
+    } catch (std::exception e) {
+        qWarning("Unable to find recipe for %s", qUtf8Printable(prodItem));
+    }
+
+    return nullptr;
+}
+
 void RecipeModel::loadRecipes()
 {
     beginResetModel();

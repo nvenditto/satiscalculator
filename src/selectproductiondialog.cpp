@@ -2,9 +2,10 @@
 #include "ui_selectproductiondialog.h"
 
 #include "recipemodel.h"
+#include "productionmodel.h"
 #include <QStandardItemModel>
 
-SelectProductionDialog::SelectProductionDialog(RecipeModel* newRecipeModelPtr, QStandardItemModel* newProdModelPtr, QWidget *parent) :
+SelectProductionDialog::SelectProductionDialog(RecipeModel* newRecipeModelPtr, ProductionModel* newProdModelPtr, QWidget *parent) :
     QDialog(parent),
     recipeModelPtr(newRecipeModelPtr),
     prodModelPtr(newProdModelPtr),
@@ -28,16 +29,34 @@ void SelectProductionDialog::addSelectedOutput()
 
     for(const auto& selectedItem : SelectedItemList)
     {
-        auto prodItem = selectedItem.data(Qt::DisplayRole).toString();
-        auto prodIcon = recipeModelPtr->iconDatabase.at(prodItem);
+        auto prodItemVar = selectedItem.data(Qt::DisplayRole);
 
-        auto foundItems = prodModelPtr->findItems(prodItem);
-
-        // Don't add duplicates
-        if(foundItems.count() == 0)
+        if(!prodItemVar.isNull() && prodItemVar.canConvert<QString>())
         {
-            auto newItem = new QStandardItem(*prodIcon, prodItem);
-            prodModelPtr->appendRow(newItem);
+            auto prodItem = prodItemVar.toString();
+            auto prodRecipe = recipeModelPtr->LookupRecipe(prodItem);
+
+            if(prodRecipe)
+            {
+                auto foundItems = prodModelPtr->findItems(prodItem);
+
+                // Don't add duplicates
+                if(foundItems.empty())
+                {
+                    double prodRate = (60.0 / prodRecipe->productionTime);
+
+                    prodModelPtr->appendRow(prodItem, prodRate);
+
+                    return;
+                }
+                else
+                {
+                    // do nothing, it's already in the list
+                    return;
+                }
+            }
         }
+
+        qWarning("Null Recipe found!");
     }
 }

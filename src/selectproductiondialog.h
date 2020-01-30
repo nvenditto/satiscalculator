@@ -4,6 +4,7 @@
 #include <QDialog>
 
 class RecipeModel;
+class ProductionModel;
 class QStandardItemModel;
 
 namespace Ui {
@@ -15,10 +16,10 @@ class SelectProductionDialog : public QDialog
     Q_OBJECT
 
     RecipeModel* recipeModelPtr;
-    QStandardItemModel* prodModelPtr;
+    ProductionModel* prodModelPtr;
 
 public:
-    explicit SelectProductionDialog(RecipeModel* recipeModelRef, QStandardItemModel* prodModelRef, QWidget *parent = nullptr);
+    explicit SelectProductionDialog(RecipeModel* recipeModelRef, ProductionModel* prodModelRef, QWidget *parent = nullptr);
     ~SelectProductionDialog();
 
 private:

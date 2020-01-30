@@ -1,23 +1,38 @@
 #ifndef PRODUCTIONMODEL_H
 #define PRODUCTIONMODEL_H
 
-#include <QAbstractListModel>
+#include <QAbstractTableModel>
 #include <vector>
+#include <unordered_map>
 
-class ProductionModel : public QAbstractListModel
+class QIcon;
+
+class ProductionModel : public QAbstractTableModel
 {
 public:
-    explicit ProductionModel(QObject* parent = nullptr);
+    explicit ProductionModel(std::unordered_map<QString, QIcon*>& iconDB, QObject* parent = nullptr);
 
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    std::unordered_map<QString, QIcon*>& iconDatabase;
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+    bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+
+    std::vector<QModelIndex> findItems(const QString& searchText, Qt::CaseSensitivity sensitivity = Qt::CaseSensitive) const;
+    void appendRow(QString outputName, double outputQty);
+    void clear();
 
 private:
 
     struct OutputItem
     {
         QString outputName;
-        unsigned int qty;
+        double qty;
     };
 
     std::vector<OutputItem> outputList;

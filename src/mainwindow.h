@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "recipemodel.h"
+#include "productionmodel.h"
 
 #include <unordered_map>
 
@@ -21,7 +22,7 @@ class MainWindow : public QMainWindow
     Ui::MainWindow* ui {nullptr};
     std::unordered_map<QString, QIcon*> iconDB;
     RecipeModel* recipeModel {nullptr};
-    QStandardItemModel* productionModel {nullptr};
+    ProductionModel* productionModel {nullptr};
 
     SelectProductionDialog* prodDlg {nullptr};
     SelectRecipeDialog* recipeDlg {nullptr};
@@ -36,6 +37,7 @@ public:
 private slots:
     void showAbout();
     void showRecipes();
+    void removeCurrentItem();
     void clearProdList();
     void showSelectProduction();
 };
