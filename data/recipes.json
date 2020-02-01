@@ -1,5 +1,55 @@
 {
-    "Iron Ingot" : {
+    "Bauxite" : {
+        "Building" : "Miner Mk1",
+        "Qty" : 1,
+        "Time" : 1
+    },
+	"Caterium Ore" : {
+        "Building" : "Miner Mk1",
+        "Qty" : 1,
+        "Time" : 1
+    },
+	"Coal" : {
+        "Building" : "Miner Mk1",
+        "Qty" : 1,
+        "Time" : 1
+    },
+	"Copper Ore" : {
+        "Building" : "Miner Mk1",
+        "Qty" : 1,
+        "Time" : 1
+    },
+	"Iron Ore" : {
+        "Building" : "Miner Mk1",
+        "Qty" : 1,
+        "Time" : 1
+    },
+	"Limestone" : {
+        "Building" : "Miner Mk1",
+        "Qty" : 1,
+        "Time" : 1
+    },
+	"Raw Quartz" : {
+        "Building" : "Miner Mk1",
+        "Qty" : 1,
+        "Time" : 1
+    },
+	"Sulfur" : {
+        "Building" : "Miner Mk1",
+        "Qty" : 1,
+        "Time" : 1
+    },
+	"Uranium" : {
+        "Building" : "Miner Mk1",
+        "Qty" : 1,
+        "Time" : 1
+    },
+	"Crude Oil" : {
+        "Building" : "Oil Pump Mk1",
+        "Qty" : 2,
+        "Time" : 1
+    },
+	"Iron Ingot" : {
         "Inputs" : {
             "Iron Ore" : 1
         },

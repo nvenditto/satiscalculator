@@ -76,28 +76,30 @@ void RecipeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
             painter->setPen(option.palette.text().color());
 
-            // Draw Each Recipe Input
-            for(const auto& recipeInput : theRecipe->inputs)
+            if(theRecipe->inputs.size() > 0)
             {
-                const QRect qtyRect(left, top, qtyWidth, iconHeight);
-                painter->drawText(qtyRect,
-                                  (Qt::AlignRight | Qt::AlignVCenter),
-                                  (QString::number(recipeInput.qty) + QString("x")));
-                left += qtyWidth;
+                // Draw Each Recipe Input
+                for(const auto& recipeInput : theRecipe->inputs)
+                {
+                    const QRect qtyRect(left, top, qtyWidth, iconHeight);
+                    painter->drawText(qtyRect,
+                                      (Qt::AlignRight | Qt::AlignVCenter),
+                                      (QString::number(recipeInput.qty) + QString("x")));
+                    left += qtyWidth;
 
-                auto inputIcon = iconDatabase.at(recipeInput.name);
-                auto inputPixmap = inputIcon->pixmap(iconWidth, iconHeight);
-                painter->drawPixmap(left, top, inputPixmap);
+                    auto inputIcon = iconDatabase.at(recipeInput.name);
+                    auto inputPixmap = inputIcon->pixmap(iconWidth, iconHeight);
+                    painter->drawPixmap(left, top, inputPixmap);
 
-                left += iconWidth + iconMargin;
+                    left += iconWidth + iconMargin;
 
 
+                }
+
+                // Draw Equals Sign
+                const QRect eqsRect(left, top, textWidth, iconHeight);
+                painter->drawText(eqsRect, Qt::AlignLeft | Qt::AlignVCenter, "=");
             }
-
-            // Draw Equals Sign
-            const QRect eqsRect(left, top, textWidth, iconHeight);
-            painter->drawText(eqsRect, Qt::AlignLeft | Qt::AlignVCenter, "=");
-
             // Draw Output
             left += textWidth + iconMargin;
             const QRect qtyRect(left, top, qtyWidth, iconHeight);

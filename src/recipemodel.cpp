@@ -324,7 +324,7 @@ void RecipeModel::addRecipe(QString outputName, QJsonObject recipeJsonObj)
 
     const auto entryMap = recipeJsonObj.toVariantMap();
 
-    if(!entryMap.contains("Qty") || !entryMap.contains("Time") || !entryMap.contains("Building") || !entryMap.contains("Inputs"))
+    if(!entryMap.contains("Qty") || !entryMap.contains("Time") || !entryMap.contains("Building") )
     {
         qCritical("Recipe missing required fields for key %s", qUtf8Printable(outputName));
         return;
@@ -334,21 +334,18 @@ void RecipeModel::addRecipe(QString outputName, QJsonObject recipeJsonObj)
     newRecipe->productionTime = entryMap.value("Time").toUInt();
     newRecipe->buildingName = entryMap.value("Building").toString();
 
-    if(!entryMap.contains("Inputs"))
-    {
-        qCritical("Recipe is missing inputs for key %s", qUtf8Printable(outputName));
-        return;
-    }
+    if(entryMap.contains("Inputs"))
+    {   
+        auto inputsMap = entryMap.value("Inputs").toMap();
 
-    auto inputsMap = entryMap.value("Inputs").toMap();
+        for(auto inputEntry = inputsMap.cbegin(); inputEntry != inputsMap.cend(); ++inputEntry)
+        {
+            Recipe::RecipeInput newInput;
+            newInput.name = inputEntry.key();
+            newInput.qty = inputEntry.value().toUInt();
 
-    for(auto inputEntry = inputsMap.cbegin(); inputEntry != inputsMap.cend(); ++inputEntry)
-    {
-        Recipe::RecipeInput newInput;
-        newInput.name = inputEntry.key();
-        newInput.qty = inputEntry.value().toUInt();
-
-        newRecipe->inputs.push_back(newInput);
+            newRecipe->inputs.push_back(newInput);
+        }
     }
 
 
