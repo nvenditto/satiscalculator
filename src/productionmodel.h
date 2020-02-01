@@ -9,10 +9,10 @@ class QIcon;
 
 class ProductionModel : public QAbstractTableModel
 {
+    std::unordered_map<QString, QIcon*>& iconDatabase;
+
 public:
     explicit ProductionModel(std::unordered_map<QString, QIcon*>& iconDB, QObject* parent = nullptr);
-
-    std::unordered_map<QString, QIcon*>& iconDatabase;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;

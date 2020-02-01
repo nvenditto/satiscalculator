@@ -18,7 +18,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="leftVerticalLayout">
         <item>
          <widget class="QPushButton" name="selectRecipesButton">
           <property name="sizePolicy">
@@ -156,7 +156,46 @@
        </layout>
       </item>
       <item>
-       <widget class="QTextEdit" name="textEdit"/>
+       <layout class="QVBoxLayout" name="rightVerticalLayout">
+        <item>
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="buildListTab">
+           <attribute name="title">
+            <string>Building List</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QTableView" name="buildTableView">
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="prodTreeTab">
+           <attribute name="title">
+            <string>Production Tree</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QTreeView" name="prodTreeView"/>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="calcPushbutton">
+          <property name="text">
+           <string>Calculate</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -168,7 +207,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -43,7 +43,7 @@ void SelectProductionDialog::addSelectedOutput()
                 // Don't add duplicates
                 if(foundItems.empty())
                 {
-                    double prodRate = (60.0 / prodRecipe->productionTime);
+                    double prodRate = prodRecipe->outputQty * (60.0 / prodRecipe->productionTime);
 
                     prodModelPtr->appendRow(prodItem, prodRate);
 

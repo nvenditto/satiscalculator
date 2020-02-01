@@ -13,6 +13,8 @@
 #include "selectrecipedialog.h"
 #include "selectproductiondialog.h"
 #include "prodqtydelegate.h"
+#include "factorymodel.h"
+#include "buildinglistmodel.h"
 
 void MainWindow::showAbout()
 {
@@ -61,6 +63,32 @@ void MainWindow::showSelectProduction()
     }
 
     prodDlg->show();
+}
+
+void MainWindow::calculate()
+{
+    // Clear existing model
+    factModel->clear();
+
+    // Add each output in the production list to our factory model
+    const int rowCount = productionModel->rowCount();
+
+    for(int row = 0; row < rowCount; ++row)
+    {
+        auto nameIndex = productionModel->index(row, 0);
+        auto rateIndex = productionModel->index(row, 1);
+
+        auto prodName = nameIndex.data().toString();
+        auto prodQty = rateIndex.data().toDouble();
+
+        factModel->addOutput(prodName, prodQty);
+    }
+
+    // Consolidate production
+    factModel->consolidate();
+
+    // Update views
+    buildingModel->updateModel(factModel);
 }
 
 void MainWindow::loadIcons()
@@ -112,6 +140,7 @@ MainWindow::MainWindow(QWidget *parent) :
      connect(ui->addProdButton, &QPushButton::clicked, this, &MainWindow::showSelectProduction);
      connect(ui->removeProdButton, &QPushButton::clicked, this, &MainWindow::removeCurrentItem);
      connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::clearProdList);
+     connect(ui->calcPushbutton, &QPushButton::clicked, this, &MainWindow::calculate);
 
 
      loadIcons();
@@ -126,6 +155,10 @@ MainWindow::MainWindow(QWidget *parent) :
      auto qtyDelegate = new ProdQtyDelegate(this);
      ui->productTableView->setItemDelegateForColumn(1, qtyDelegate);
 
+     factModel = new FactoryModel(*recipeModel);
+
+     buildingModel = new BuildingListModel(iconDB);
+     ui->buildTableView->setModel(buildingModel);
 }
 
 MainWindow::~MainWindow()

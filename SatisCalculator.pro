@@ -25,7 +25,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += \ 
+SOURCES += \
+    src/buildinglistmodel.cpp \
+    src/factorymodel.cpp \
+    src/factorynode.cpp \
     src/prodqtydelegate.cpp \
     src/selectproductiondialog.cpp \
     src/main.cpp \
@@ -36,7 +39,10 @@ SOURCES += \
     src/selectrecipedialog.cpp \
     src/recipedelegate.cpp
 
-HEADERS += \ 
+HEADERS += \
+    src/buildinglistmodel.h \
+    src/factorynode.h \
+    src/factorymodel.h \
     src/prodqtydelegate.h \
     src/selectproductiondialog.h \
     src/Recipe.h \
