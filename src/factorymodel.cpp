@@ -3,6 +3,7 @@
 #include "factorynode.h"
 #include "recipemodel.h"
 
+#include <QIcon>
 
 void FactoryModel::deleteTree(FactoryNode* nodePtr)
 {
@@ -77,19 +78,146 @@ void FactoryModel::consolidateNode(FactoryNode* currentNode)
     }
 }
 
-FactoryModel::FactoryModel(RecipeModel &recipeModelRef) :
+FactoryModel::FactoryModel(RecipeModel &recipeModelRef, std::unordered_map<QString, QIcon*>& iconDB, QObject* parent) :
+    QAbstractItemModel(parent),
+    iconDatabase(iconDB),
     modelRef(recipeModelRef)
+
 {
 
 }
 
-FactoryModel::~FactoryModel()
+QModelIndex FactoryModel::index(int row, int column, const QModelIndex &parent) const
 {
-    clear();
+    if(!parent.isValid())
+    {
+        if(static_cast<size_t>(row) < OutputNodes.size() && column == 0)
+        {
+            auto nodePtr = OutputNodes.at(static_cast<size_t>(row));
+
+            return createIndex(row, column, nodePtr);
+        }
+
+    }
+    else
+    {
+        auto parentNode = static_cast<FactoryNode*>(parent.internalPointer());
+
+        if(parentNode != nullptr && static_cast<size_t>(row) < parentNode->getSources().size() && column == 0)
+        {
+            auto nodePtr = parentNode->getSources().at(static_cast<size_t>(row));
+
+            return createIndex(row, column, nodePtr);
+        }
+    }
+
+    qWarning("Unable to create index for row = %s, col = %s, parent = %s",
+             qUtf8Printable(QString::number(row)),
+             qUtf8Printable(QString::number(column)),
+             qUtf8Printable(QString::number(parent.internalId())));
+    return {};
+}
+
+QModelIndex FactoryModel::parent(const QModelIndex &child) const
+{
+    if(!child.isValid() || child.internalPointer() == nullptr)
+    {
+        return QModelIndex();
+    }
+
+    auto childNode = static_cast<FactoryNode*>(child.internalPointer());
+
+    auto parentNode = childNode->getDestination();
+
+    if(parentNode == nullptr)
+    {
+        return {};
+    }
+
+    auto grandParent = parentNode->getDestination();
+
+    if(grandParent == nullptr)
+    {
+        int row = 0;
+        for(const auto& outputEntry : OutputNodes)
+        {
+            if(outputEntry == parentNode)
+            {
+                return createIndex(row, 0, parentNode);
+            }
+
+            ++row;
+        }
+    }
+    else
+    {
+        int row = 0;
+        for(const auto& outputEntry : grandParent->getSources())
+        {
+            if(outputEntry == parentNode)
+            {
+                return createIndex(row, 0, parentNode);
+            }
+
+            ++row;
+        }
+    }
+
+
+    qWarning("Unable to find parent for index with row = %s, col = %s, parent = %s",
+             qUtf8Printable(QString::number(child.row())),
+             qUtf8Printable(QString::number(child.column())),
+             qUtf8Printable(QString::number(child.internalId())));
+    return {};
+}
+
+int FactoryModel::rowCount(const QModelIndex &parent) const
+{
+    if(!parent.isValid())
+    {
+        return static_cast<int>(OutputNodes.size());
+    }
+    else
+    {
+        auto currentNode = static_cast<FactoryNode*>(parent.internalPointer());
+
+        return static_cast<int>(currentNode->getSources().size());
+    }
+}
+
+int FactoryModel::columnCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent)
+
+    return 1;
+}
+
+QVariant FactoryModel::data(const QModelIndex &index, int role) const
+{
+    if(!index.isValid() || index.column() > 0 || index.internalPointer() == nullptr)
+    {
+        return {};
+    }
+
+    auto node = static_cast<FactoryNode*>(index.internalPointer());
+
+    if(role == Qt::DisplayRole)
+    {
+        return {node->getOutputName()};
+    }
+    else if(role == Qt::DecorationRole)
+    {
+        auto icon = iconDatabase.at(node->getOutputName());
+        return {*icon};
+    }
+
+    return {};
 }
 
 void FactoryModel::addOutput(const QString& newOutput, double outputRate)
 {
+    beginResetModel();
+
     auto outputRecipe = modelRef.LookupRecipe(newOutput);
 
     if(outputRecipe != nullptr)
@@ -98,6 +226,8 @@ void FactoryModel::addOutput(const QString& newOutput, double outputRate)
 
         OutputNodes.push_back(outputNode);
     }
+
+    endResetModel();
 }
 
 void FactoryModel::consolidate()
@@ -110,10 +240,16 @@ void FactoryModel::consolidate()
 
 void FactoryModel::clear()
 {
+    beginResetModel();
+
     for(auto nodeEntry : OutputNodes)
     {
         deleteTree(nodeEntry);
     }
 
+    OutputNodes.clear();
+
     buildingSet.clear();
+
+    endResetModel();
 }

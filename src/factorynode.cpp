@@ -17,6 +17,7 @@ void FactoryNode::addSourceNode(FactoryNode *newSourceNode)
 {
     if(newSourceNode != nullptr)
     {
+        newSourceNode->setDestination(this);
         SourceNodes.push_back(newSourceNode);
     }
 }

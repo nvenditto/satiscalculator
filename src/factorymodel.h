@@ -5,12 +5,17 @@
 
 #include <unordered_map>
 #include <QHash>
+#include <QAbstractItemModel>
 
+#include <unordered_map>
+
+class QIcon;
 class RecipeModel;
 
-class FactoryModel
+class FactoryModel : public QAbstractItemModel
 {
     std::vector<FactoryNode*> OutputNodes;
+    std::unordered_map<QString, QIcon*>& iconDatabase;
     RecipeModel& modelRef;
 
     std::unordered_map<QString, FactoryNode*> buildingSet;
@@ -20,11 +25,17 @@ class FactoryModel
     void consolidateNode(FactoryNode*);
 
 public:
-    FactoryModel(RecipeModel& recipeModelRef);
+    FactoryModel(RecipeModel& recipeModelRef, std::unordered_map<QString, QIcon*>& iconDB, QObject* parent = nullptr);
     FactoryModel() = delete;
-    ~FactoryModel();
-    FactoryModel(const FactoryModel&) = default;
-    FactoryModel(FactoryModel&&) = default;
+    FactoryModel(const FactoryModel&) = delete;
+    FactoryModel(FactoryModel&&) = delete;
+
+    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
+    QModelIndex parent(const QModelIndex &child) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
 
     const std::unordered_map<QString, FactoryNode*>& getBuildingSet() const
     {

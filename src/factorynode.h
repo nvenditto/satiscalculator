@@ -28,6 +28,11 @@ public:
 
     void addSourceNode(FactoryNode* newSourceNode);
 
+    void setDestination(FactoryNode* newDest)
+    {
+        DestinationNode = newDest;
+    }
+
     FactoryNode* getDestination() const
     {
         return DestinationNode;

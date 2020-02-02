@@ -155,10 +155,11 @@ MainWindow::MainWindow(QWidget *parent) :
      auto qtyDelegate = new ProdQtyDelegate(this);
      ui->productTableView->setItemDelegateForColumn(1, qtyDelegate);
 
-     factModel = new FactoryModel(*recipeModel);
+     factModel = new FactoryModel(*recipeModel, iconDB, this);
 
-     buildingModel = new BuildingListModel(iconDB);
+     buildingModel = new BuildingListModel(iconDB, this);
      ui->buildTableView->setModel(buildingModel);
+     ui->prodTreeView->setModel(factModel);
 }
 
 MainWindow::~MainWindow()
