@@ -89,6 +89,8 @@ void MainWindow::calculate()
 
     // Update views
     buildingModel->updateModel(factModel);
+
+    ui->prodTreeView->expandAll();
 }
 
 void MainWindow::loadIcons()
