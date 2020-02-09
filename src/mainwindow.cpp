@@ -8,7 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QStandardItemModel>
+#include <QSortFilterProxyModel>
 
 #include "selectrecipedialog.h"
 #include "selectproductiondialog.h"
@@ -152,7 +152,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
      productionModel->setHeaderData(0, Qt::Horizontal, "Item");
      productionModel->setHeaderData(1, Qt::Horizontal, "Rate");
-     ui->productTableView->setModel(productionModel);
+
+     auto proxyProdModel = new QSortFilterProxyModel(this);
+     proxyProdModel->setSourceModel(productionModel);
+
+     ui->productTableView->setModel(proxyProdModel);
+     ui->productTableView->setSortingEnabled(true);
 
      auto qtyDelegate = new ProdQtyDelegate(this);
      ui->productTableView->setItemDelegateForColumn(1, qtyDelegate);
@@ -160,7 +165,12 @@ MainWindow::MainWindow(QWidget *parent) :
      factModel = new FactoryModel(*recipeModel, iconDB, this);
 
      buildingModel = new BuildingListModel(iconDB, this);
-     ui->buildTableView->setModel(buildingModel);
+
+     auto proxyBuildModel = new QSortFilterProxyModel(this);
+     proxyBuildModel->setSourceModel(buildingModel);
+
+     ui->buildTableView->setModel(proxyBuildModel);
+     ui->buildTableView->setSortingEnabled(true);
      ui->prodTreeView->setModel(factModel);
 }
 

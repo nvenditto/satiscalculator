@@ -3,7 +3,6 @@
 
 #include "recipemodel.h"
 #include "productionmodel.h"
-#include <QStandardItemModel>
 
 SelectProductionDialog::SelectProductionDialog(RecipeModel* newRecipeModelPtr, ProductionModel* newProdModelPtr, QWidget *parent) :
     QDialog(parent),
